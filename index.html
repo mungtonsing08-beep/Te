@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Tete ❤️</title>
+
+<style>
+body{
+margin:0;
+font-family:'Segoe UI',cursive;
+background:black;
+color:white;
+text-align:center;
+overflow:hidden;
+}
+
+/* STAR INTRO */
+#stars{
+position:fixed;
+top:0;
+left:0;
+}
+
+/* MAIN */
+#main{
+display:block; 
+padding:20px;
+background:linear-gradient(135deg,#ff6a88,#ff99ac);
+min-height:100vh;
+}
+
+.photo{
+width:90%;
+max-width:320px;
+border-radius:20px;
+margin:20px auto;
+box-shadow:0 0 20px rgba(0,0,0,0.5);
+}
+
+/* HEARTS */
+.heart{position:fixed;bottom:-20px;animation:up 6s linear infinite}
+@keyframes up{to{transform:translateY(-110vh);opacity:0}}
+
+/* BUTTONS */
+#buttons{display:none;}
+button{
+padding:14px 24px;
+font-size:18px;
+border:none;
+border-radius:30px;
+margin:10px;
+}
+#yes{background:#ff2d55;color:white}
+#no{background:white;color:black;position:relative}
+
+/* RING */
+#ring{
+font-size:90px;
+position:absolute;
+top:-200px;
+left:50%;
+transform:translateX(-50%);
+display:none;
+animation:drop 3s forwards;
+}
+@keyframes drop{to{top:120px}}
+
+#final{
+display:none;
+margin-top:220px;
+font-size:22px;
+}
+
+/* COUNTDOWN */
+#countdown{
+font-size:40px;
+margin-top:20px;
+}
+
+/* FIREWORKS */
+canvas{position:fixed;top:0;left:0;pointer-events:none}
+</style>
+</head>
+
+<body>
+
+<canvas id="stars"></canvas>
+
+<div id="main">
+
+<h1>Jenny Vanlalsangi Hatzaw ❤️</h1>
+<h2>My Tete…</h2>
+
+<img src="photo.jpg" class="photo">
+
+<!-- ROMANTIC TEXT -->
+<div style="font-family:Arial, sans-serif; font-style:normal; font-size:18px; line-height:1.6; color:white;">
+<p>
+18 years and still running…  
+From an Instagram text  
+to that first noon we met.  
+You were with your cousin,  
+we walked for a bit…  
+and I remember thinking  
+how pretty you looked.  
+
+Since that day,  
+you became my constant,  
+my peace,  
+my home.  
+
+Every year with you has been my favourite chapter.  
+Every laugh, every moment, every memory... has only made me love you more.
+</p>
+
+<p>
+<b>
+If I had to choose again, in every lifetime, in every world, it would still be you.  
+You make my heart calm, my days brighter, and my life feel right.  
+No matter where life takes us, I just want you beside me.
+</b>
+</p>
+</div>
+
+<h2>Will u be my valentine again, darling? ❤️</h2>
+
+<div id="countdown">5</div>
+
+<div id="buttons">
+<button id="yes">YES ❤️</button>
+<button id="no">No 🙈</button>
+</div>
+
+</div>
+
+<div id="ring">💍</div>
+<div id="final">
+For my most beautiful women,<br>
+a Fel pen² of the world ❤️
+</div>
+
+<audio id="music">
+<source src="perfect.mp3">
+</audio>
+
+<canvas id="fire"></canvas>
+
+<script>
+/* STAR NAME INTRO */
+let canvas=document.getElementById("stars");
+let ctx=canvas.getContext("2d");
+canvas.width=innerWidth;
+canvas.height=innerHeight;
+
+let text="Jenny Vanlalsangi Hatzaw";
+let i=0;
+
+function draw(){
+ctx.clearRect(0,0,canvas.width,canvas.height);
+ctx.fillStyle="white";
+ctx.font="28px cursive";
+ctx.fillText(text.substring(0,i),40,200);
+i++;
+if(i<=text.length){
+setTimeout(draw,120);
+}
+}
+draw();
+
+/* HEARTS */
+hearts();
+function hearts(){
+setInterval(()=>{
+let h=document.createElement("div");
+h.className="heart";
+h.innerText="❤️";
+h.style.left=Math.random()*100+"vw";
+h.style.fontSize=(20+Math.random()*30)+"px";
+document.body.appendChild(h);
+setTimeout(()=>h.remove(),6000);
+},300);
+}
+
+/* COUNTDOWN BEFORE BUTTONS */
+let countdown=document.getElementById("countdown");
+let buttons=document.getElementById("buttons");
+let time=5; // 5 seconds
+let timer=setInterval(()=>{
+time--;
+if(time<=0){
+clearInterval(timer);
+countdown.style.display="none";
+buttons.style.display="block";
+}else{
+countdown.innerText=time;
+}
+},1000);
+
+/* NO BUTTON RUN */
+let no=document.getElementById("no");
+no.addEventListener("mouseover",()=>{
+no.style.position="absolute";
+no.style.left=Math.random()*80+"vw";
+no.style.top=Math.random()*80+"vh";
+});
+
+/* YES CLICK - cinematic music crescendo */
+document.getElementById("yes").onclick=function(){
+let audio=document.getElementById("music");
+audio.volume=0; 
+audio.play();
+fireworks();
+
+// Gradually increase volume to max over 2 seconds
+let vol=0;
+let fadeIn=setInterval(()=>{
+vol+=0.02;
+if(vol>=1){vol=1; clearInterval(fadeIn);}
+audio.volume=vol;
+},40);
+
+// Ring + message after 2 seconds (matches musical climax)
+setTimeout(()=>{
+document.getElementById("ring").style.display="block";
+document.getElementById("final").style.display="block";
+},2000);
+};
+
+/* FIREWORKS */
+let f=document.getElementById("fire");
+let fx=f.getContext("2d");
+f.width=innerWidth;f.height=innerHeight;
+
+function fireworks(){
+for(let i=0;i<25;i++){setTimeout(explode,i*200);}
+}
+
+function explode(){
+let x=Math.random()*f.width;
+let y=Math.random()*f.height/2;
+for(let i=0;i<60;i++){
+let a=Math.random()*2*Math.PI;
+let s=Math.random()*5;
+draw2(x,y,Math.cos(a)*s,Math.sin(a)*s);
+}
+}
+
+function draw2(x,y,dx,dy){
+let life=30;
+function anim(){
+fx.fillStyle="white";
+fx.fillRect(x,y,3,3);
+x+=dx;y+=dy;life--;
+if(life>0)requestAnimationFrame(anim);
+}
+anim();
+}
+</script>
+
+</body>
+</html>
